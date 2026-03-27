@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import ProjectList from './components/ProjectList';
 import ServiceMarketplace from './components/ServiceMarketplace';
 import Analytics from './components/Analytics';
+import Pricing from './components/Pricing';
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, Mail, Phone, Github, Twitter, Linkedin, ArrowUpRight } from 'lucide-react';
 
@@ -20,6 +21,8 @@ export default function App() {
         return <ServiceMarketplace />;
       case 'analytics':
         return <Analytics />;
+      case 'pricing':
+        return <Pricing />;
       default:
         return <Dashboard />;
     }
@@ -76,6 +79,7 @@ export default function App() {
                 <li><button onClick={() => setActiveTab('projects')} className="hover:text-white transition-colors">Construction Map</button></li>
                 <li><button onClick={() => setActiveTab('services')} className="hover:text-white transition-colors">Service Marketplace</button></li>
                 <li><button onClick={() => setActiveTab('analytics')} className="hover:text-white transition-colors">Market Analytics</button></li>
+                <li><button onClick={() => setActiveTab('pricing')} className="hover:text-white transition-colors">Pricing & Plans</button></li>
               </ul>
             </div>
 
@@ -84,8 +88,8 @@ export default function App() {
               <ul className="space-y-4 text-sm text-gray-400">
                 <li><a href="#" className="hover:text-white transition-colors">BuildNow Portal</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">TG-bPASS Guidelines</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">RERA Compliance</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Developer API</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">RERA Compliance (Beta)</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Developer API (Coming Soon)</a></li>
               </ul>
             </div>
 
@@ -113,8 +117,8 @@ export default function App() {
               © 2026 BuildTrack Telangana. All rights reserved. Built for the Telangana Construction Ecosystem.
             </p>
             <div className="flex items-center gap-6 text-xs text-gray-500">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy <span className="text-[8px] bg-gray-600 px-1 rounded ml-1">COMING SOON</span></a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service <span className="text-[8px] bg-gray-600 px-1 rounded ml-1">COMING SOON</span></a>
               <a href="#" className="hover:text-white transition-colors flex items-center gap-1">
                 Govt. Data MoU <ArrowUpRight className="w-3 h-3" />
               </a>

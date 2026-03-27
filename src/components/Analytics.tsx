@@ -4,7 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   AreaChart, Area, PieChart, Pie, Cell, Legend 
 } from 'recharts';
-import { TrendingUp, Building2, MapPin, Calendar, ArrowUpRight, ArrowDownRight, Info } from 'lucide-react';
+import { TrendingUp, Building2, MapPin, Calendar, ArrowUpRight, ArrowDownRight, Info, Zap } from 'lucide-react';
 import { MOCK_TRENDS } from '../constants';
 import { cn } from '../lib/utils';
 
@@ -12,11 +12,11 @@ export default function Analytics() {
   const COLORS = ['#1A1A1A', '#F27D26', '#3B82F6', '#10B981'];
   
   const districtData = [
-    { name: 'Hyderabad', value: 450, growth: '+12%' },
-    { name: 'Warangal', value: 320, growth: '+24%' },
-    { name: 'Nizamabad', value: 180, growth: '+8%' },
-    { name: 'Khammam', value: 150, growth: '+15%' },
-    { name: 'Karimnagar', value: 120, growth: '+5%' },
+    { name: 'Hyderabad', value: 450, growth: '+12%', score: 92 },
+    { name: 'Warangal', value: 320, growth: '+24%', score: 88 },
+    { name: 'Nizamabad', value: 180, growth: '+8%', score: 76 },
+    { name: 'Khammam', value: 150, growth: '+15%', score: 82 },
+    { name: 'Karimnagar', value: 120, growth: '+5%', score: 79 },
   ];
 
   const typeData = [
@@ -31,7 +31,7 @@ export default function Analytics() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Market Analytics</h1>
-          <p className="text-gray-500 mt-1">Real-time construction trends and growth metrics for Telangana.</p>
+          <p className="text-gray-500 mt-1">Real-time construction trends and growth metrics. <span className="text-[10px] font-bold text-orange-600 uppercase tracking-widest ml-2">Source: TS Govt. Open Data</span></p>
         </div>
         <div className="flex items-center gap-2 bg-white p-1 rounded-xl border border-[#E5E5E5]">
           <button className="px-4 py-2 rounded-lg text-sm font-bold bg-[#1A1A1A] text-white">Last 6 Months</button>
@@ -82,6 +82,28 @@ export default function Analytics() {
           <h3 className="text-2xl font-bold mt-1">14.2 Months</h3>
           <p className="text-[10px] text-gray-400 mt-4 uppercase font-bold tracking-widest">Efficiency Improvement</p>
         </div>
+      </div>
+
+      {/* Investor Heatmap Banner (Beta) */}
+      <div className="relative overflow-hidden rounded-3xl bg-[#1A1A1A] text-white p-8 mb-8">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="max-w-xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-600 text-[10px] font-bold uppercase tracking-wider mb-4">
+              <Zap className="w-3 h-3" /> Beta Feature
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 italic serif">Investor Heatmap 2.0</h2>
+            <p className="text-gray-400 text-sm md:text-base">
+              Identify high-yield construction zones using AI-powered predictive modeling. 
+              Available exclusively for Pro and Enterprise members.
+            </p>
+          </div>
+          <button className="whitespace-nowrap px-8 py-4 bg-white text-[#1A1A1A] rounded-xl font-bold hover:bg-gray-100 transition-all transform hover:scale-105">
+            Explore Heatmap
+          </button>
+        </div>
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/20 blur-[100px] -mr-32 -mt-32" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-600/10 blur-[80px] -ml-24 -mb-24" />
       </div>
 
       {/* Charts Grid */}

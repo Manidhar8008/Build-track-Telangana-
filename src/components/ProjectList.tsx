@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Search, Filter, MapPin, Calendar, Building2, ChevronRight, MoreVertical, Download, Share2 } from 'lucide-react';
+import { Search, Filter, MapPin, Calendar, Building2, ChevronRight, MoreVertical, Download, Share2, ShieldCheck, ExternalLink } from 'lucide-react';
 import { MOCK_PROJECTS } from '../constants';
 import { cn } from '../lib/utils';
 
@@ -27,6 +27,22 @@ export default function ProjectList() {
             <Share2 className="w-4 h-4" /> Share View
           </button>
         </div>
+      </div>
+
+      {/* TG-bPASS Tracker Banner */}
+      <div className="bg-blue-600 rounded-2xl p-6 text-white flex flex-col md:flex-row items-center justify-between gap-4 shadow-lg shadow-blue-100">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+            <ExternalLink className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="font-bold">TG-bPASS Permit Tracker <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-widest ml-2">Beta</span></h3>
+            <p className="text-blue-100 text-sm">Track your building permit application status directly through our integrated portal.</p>
+          </div>
+        </div>
+        <button className="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-blue-50 transition-all active:scale-95">
+          Track Permit
+        </button>
       </div>
 
       {/* Filters & Search */}
@@ -77,7 +93,7 @@ export default function ProjectList() {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute top-4 left-4">
+              <div className="absolute top-4 left-4 flex flex-col gap-2">
                 <span className={cn(
                   "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm",
                   project.status === 'In Progress' ? "bg-blue-500 text-white" :
@@ -87,6 +103,10 @@ export default function ProjectList() {
                 )}>
                   {project.status}
                 </span>
+                <div className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                  <ShieldCheck className="w-3 h-3 text-green-600" />
+                  <span className="text-[9px] font-bold text-green-700 uppercase tracking-widest">RERA Verified</span>
+                </div>
               </div>
               <div className="absolute top-4 right-4">
                 <button className="p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors">

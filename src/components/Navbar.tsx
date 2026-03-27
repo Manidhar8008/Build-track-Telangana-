@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, LayoutDashboard, Briefcase, BarChart3, Menu, X } from 'lucide-react';
+import { Map, LayoutDashboard, Briefcase, BarChart3, Menu, X, ShieldCheck } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface NavbarProps {
@@ -15,6 +15,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { id: 'projects', label: 'Projects', icon: Map },
     { id: 'services', label: 'Marketplace', icon: Briefcase },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'pricing', label: 'Pricing', icon: ShieldCheck },
   ];
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Building2, HardHat, TrendingUp, ArrowUpRight, Search, Filter } from 'lucide-react';
-import { MOCK_PROJECTS } from '../constants';
+import { MOCK_PROJECTS, MATERIAL_PRICES } from '../constants';
 import { cn } from '../lib/utils';
 
 export default function Dashboard() {
@@ -88,9 +88,12 @@ export default function Dashboard() {
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold">Construction Hotspots</h2>
-            <button className="text-sm font-medium text-orange-600 hover:underline flex items-center gap-1">
-              View Full Map <ArrowUpRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-4">
+              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Source: TG-bPASS Portal</span>
+              <button className="text-sm font-medium text-orange-600 hover:underline flex items-center gap-1">
+                View Full Map <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
           <div className="card h-[400px] relative bg-gray-100 flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -105,44 +108,81 @@ export default function Dashboard() {
             <div className="absolute top-1/2 right-1/4 w-3 h-3 bg-blue-500 rounded-full animate-ping" />
             <div className="absolute bottom-1/3 left-1/2 w-5 h-5 bg-green-500 rounded-full animate-ping" />
           </div>
+
+          {/* AI Cost Estimator CTA */}
+          <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-orange-100">
+            <div className="max-w-md">
+              <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6" /> AI Cost Estimator <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full uppercase tracking-widest">Beta</span>
+              </h3>
+              <p className="text-orange-50 text-sm">
+                Estimate your construction costs in seconds using real-time Telangana material prices and AI-driven market analysis.
+              </p>
+            </div>
+            <button className="bg-white text-orange-600 px-8 py-3 rounded-xl font-bold hover:bg-orange-50 transition-all active:scale-95 whitespace-nowrap">
+              Try Estimator
+            </button>
+          </div>
         </div>
 
-        {/* Recent Projects Sidebar */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold">Recent Permits</h2>
-            <button className="text-sm font-medium text-gray-500 hover:text-[#1A1A1A]">See All</button>
-          </div>
-          <div className="space-y-4">
-            {MOCK_PROJECTS.slice(0, 4).map((project) => (
-              <div key={project.id} className="card p-4 hover:border-orange-200 transition-colors cursor-pointer group">
-                <div className="flex justify-between items-start mb-2">
-                  <span className={cn(
-                    "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded",
-                    project.type === 'Residential' ? "bg-blue-100 text-blue-700" :
-                    project.type === 'Commercial' ? "bg-purple-100 text-purple-700" :
-                    "bg-orange-100 text-orange-700"
-                  )}>
-                    {project.type}
-                  </span>
-                  <span className="text-[10px] font-mono text-gray-400">{project.permitDate}</span>
-                </div>
-                <h4 className="font-bold text-sm group-hover:text-orange-600 transition-colors">{project.title}</h4>
-                <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
-                  <MapPin className="w-3 h-3" /> {project.location}
-                </p>
-                <div className="mt-3 flex items-center justify-between">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                        <img src={`https://i.pravatar.cc/100?u=${project.id}${i}`} alt="user" referrerPolicy="no-referrer" />
-                      </div>
-                    ))}
+        {/* Sidebar: Material Prices & Recent Permits */}
+        <div className="space-y-8">
+          {/* Material Price Tracker */}
+          <div className="card p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold">Material Prices</h3>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Live: TS Market</span>
+            </div>
+            <div className="space-y-4">
+              {MATERIAL_PRICES.map((item) => (
+                <div key={item.item} className="flex items-center justify-between group">
+                  <div>
+                    <p className="text-sm font-medium text-gray-700 group-hover:text-orange-600 transition-colors">{item.item}</p>
+                    <p className="text-[10px] text-gray-400">Updated 2h ago</p>
                   </div>
-                  <span className="text-[10px] font-medium text-gray-400">12 Service Bids</span>
+                  <div className="text-right">
+                    <p className="text-sm font-bold">{item.price}</p>
+                    <p className={cn(
+                      "text-[10px] font-bold",
+                      item.change.startsWith('+') ? "text-red-500" : item.change === '0%' ? "text-gray-400" : "text-green-500"
+                    )}>
+                      {item.change}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button className="w-full mt-6 py-2 text-xs font-bold text-gray-500 hover:text-orange-600 border border-dashed border-gray-200 rounded-lg transition-colors">
+              View Detailed Index
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold">Recent Permits</h2>
+              <button className="text-sm font-medium text-gray-500 hover:text-[#1A1A1A]">See All</button>
+            </div>
+            <div className="space-y-4">
+              {MOCK_PROJECTS.slice(0, 3).map((project) => (
+                <div key={project.id} className="card p-4 hover:border-orange-200 transition-colors cursor-pointer group">
+                  <div className="flex justify-between items-start mb-2">
+                    <span className={cn(
+                      "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded",
+                      project.type === 'Residential' ? "bg-blue-100 text-blue-700" :
+                      project.type === 'Commercial' ? "bg-purple-100 text-purple-700" :
+                      "bg-orange-100 text-orange-700"
+                    )}>
+                      {project.type}
+                    </span>
+                    <span className="text-[10px] font-mono text-gray-400">{project.permitDate}</span>
+                  </div>
+                  <h4 className="font-bold text-sm group-hover:text-orange-600 transition-colors">{project.title}</h4>
+                  <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                    <MapPin className="w-3 h-3" /> {project.location}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

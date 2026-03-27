@@ -2,7 +2,7 @@ import { ConstructionProject, ServiceProvider, ConstructionTrend } from './types
 
 export const MOCK_PROJECTS: ConstructionProject[] = [
   {
-    id: '1',
+    id: 'TS-WGL-2026-001',
     title: 'Hanamkonda Residential Complex',
     location: 'Hanamkonda, Warangal',
     district: 'Warangal',
@@ -15,7 +15,7 @@ export const MOCK_PROJECTS: ConstructionProject[] = [
     coordinates: [18.0142, 79.5684],
   },
   {
-    id: '2',
+    id: 'TS-HYD-2026-042',
     title: 'Warangal IT Park Phase II',
     location: 'Madikonda, Warangal',
     district: 'Warangal',
@@ -28,7 +28,7 @@ export const MOCK_PROJECTS: ConstructionProject[] = [
     coordinates: [17.9867, 79.4823],
   },
   {
-    id: '3',
+    id: 'TS-HYD-2026-105',
     title: 'Gachibowli Luxury Apartments',
     location: 'Gachibowli, Hyderabad',
     district: 'Hyderabad',
@@ -41,7 +41,7 @@ export const MOCK_PROJECTS: ConstructionProject[] = [
     coordinates: [17.4401, 78.3489],
   },
   {
-    id: '4',
+    id: 'TS-KMM-2026-012',
     title: 'Khammam Industrial Hub',
     location: 'Khammam Rural',
     district: 'Khammam',
@@ -54,7 +54,7 @@ export const MOCK_PROJECTS: ConstructionProject[] = [
     coordinates: [17.2473, 80.1514],
   },
   {
-    id: '5',
+    id: 'TS-NZM-2026-008',
     title: 'Nizamabad Shopping Mall',
     location: 'Nizamabad City',
     district: 'Nizamabad',
@@ -118,4 +118,38 @@ export const MOCK_TRENDS: ConstructionTrend[] = [
   { month: 'Jan 26', residential: 60, commercial: 22, industrial: 15 },
   { month: 'Feb 26', residential: 65, commercial: 25, industrial: 20 },
   { month: 'Mar 26', residential: 72, commercial: 30, industrial: 25 },
+];
+
+export const MATERIAL_PRICES = [
+  { item: 'Cement (per bag)', price: '₹380', change: '+2%' },
+  { item: 'Steel (per ton)', price: '₹65,000', change: '-1.5%' },
+  { item: 'Sand (per unit)', price: '₹4,500', change: '+5%' },
+  { item: 'Bricks (per 1000)', price: '₹8,000', change: '0%' },
+];
+
+export const PRICING_PLANS = [
+  {
+    name: 'Basic',
+    price: 'Free',
+    period: 'Forever',
+    features: ['View Construction Map', 'Basic Project Search', 'Marketplace Access', 'Public Analytics'],
+    cta: 'Get Started',
+    highlight: false
+  },
+  {
+    name: 'Pro',
+    price: '₹1,008',
+    period: 'per month',
+    features: ['AI Cost Estimator (Beta)', 'RERA Verification Check', 'Detailed Project Analytics', 'Priority Support', 'WhatsApp Alerts (Coming Soon)'],
+    cta: 'Start Pro Trial',
+    highlight: true
+  },
+  {
+    name: 'Enterprise',
+    price: '₹18,000',
+    period: 'per year',
+    features: ['Investor Heatmap', 'Full API Access', 'Multi-project Tracking', 'AI Document Scanner', 'Dedicated Account Manager'],
+    cta: 'Contact Sales',
+    highlight: false
+  }
 ];
