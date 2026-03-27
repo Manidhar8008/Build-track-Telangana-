@@ -1,0 +1,5 @@
+{
+  "name": "BuildTrack Telangana",
+  "description": "Real-time construction monitoring and service marketplace for Telangana, connecting homeowners with contractors and material suppliers.",
+  "requestFramePermissions": ["geolocation"]
+}
