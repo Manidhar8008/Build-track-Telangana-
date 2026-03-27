@@ -5,6 +5,39 @@ import { PRICING_PLANS } from '../constants';
 import { cn } from '../lib/utils';
 
 export default function Pricing() {
+  const [loading, setLoading] = React.useState<string | null>(null);
+
+  const handleCheckout = async (plan: any) => {
+    if (plan.price === 'Free') return;
+    
+    setLoading(plan.name);
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planName: plan.name,
+          price: plan.price,
+          period: plan.period,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Failed to start checkout. Please ensure STRIPE_SECRET_KEY is set in the environment.');
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <div className="space-y-16 pb-20">
       <div className="text-center max-w-3xl mx-auto">
@@ -49,13 +82,18 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <button className={cn(
-              "w-full py-3 rounded-xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2",
-              plan.highlight 
-                ? "bg-orange-600 text-white hover:bg-orange-700 shadow-lg shadow-orange-200" 
-                : "bg-gray-100 text-[#1A1A1A] hover:bg-gray-200"
-            )}>
-              {plan.cta} <ArrowRight className="w-4 h-4" />
+            <button 
+              onClick={() => handleCheckout(plan)}
+              disabled={loading !== null}
+              className={cn(
+                "w-full py-3 rounded-xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2",
+                plan.highlight 
+                  ? "bg-orange-600 text-white hover:bg-orange-700 shadow-lg shadow-orange-200" 
+                  : "bg-gray-100 text-[#1A1A1A] hover:bg-gray-200",
+                loading === plan.name && "opacity-50 cursor-not-allowed"
+              )}
+            >
+              {loading === plan.name ? "Processing..." : plan.cta} <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>
         ))}

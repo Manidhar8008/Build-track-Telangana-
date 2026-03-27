@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique user ID" },
+        "email": { "type": "string", "format": "email", "description": "The user's email address" },
+        "displayName": { "type": "string", "description": "The user's display name" },
+        "photoURL": { "type": "string", "format": "uri", "description": "The user's profile photo URL" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "The user's role" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "Support messages from users",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "The sender's name" },
+        "email": { "type": "string", "format": "email", "description": "The sender's email" },
+        "message": { "type": "string", "description": "The message content" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the message was sent" },
+        "uid": { "type": "string", "description": "The user ID of the sender (if logged in)" }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/contactMessages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Support inquiries"
+    }
+  }
+}

@@ -1,10 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Building2, HardHat, TrendingUp, ArrowUpRight, Search, Filter } from 'lucide-react';
+import { User } from 'firebase/auth';
+import { MapPin, Building2, HardHat, TrendingUp, ArrowUpRight, Search, Filter, Users, User as UserIcon, ShieldCheck } from 'lucide-react';
 import { MOCK_PROJECTS, MATERIAL_PRICES } from '../constants';
 import { cn } from '../lib/utils';
 
-export default function Dashboard() {
+interface DashboardProps {
+  user: User | null;
+}
+
+export default function Dashboard({ user }: DashboardProps) {
   const stats = [
     { label: 'Active Projects', value: '1,248', change: '+12%', icon: Building2, color: 'text-blue-600' },
     { label: 'Permits Issued', value: '342', change: '+5%', icon: MapPin, color: 'text-green-600' },
@@ -14,6 +19,34 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8 pb-12">
+      {/* User Welcome Section */}
+      {user && (
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center justify-between bg-white p-4 rounded-2xl border border-gray-100 shadow-sm"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
+              {user.photoURL ? (
+                <img src={user.photoURL} alt={user.displayName || ''} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              ) : (
+                <UserIcon className="w-6 h-6 text-orange-600" />
+              )}
+            </div>
+            <div>
+              <h2 className="font-bold text-gray-900">Welcome back, {user.displayName?.split(' ')[0]}!</h2>
+              <p className="text-xs text-gray-500 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-green-500" /> Free Plan User
+              </p>
+            </div>
+          </div>
+          <div className="hidden sm:flex items-center gap-2">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Last Login: Just now</span>
+          </div>
+        </motion.div>
+      )}
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#1A1A1A] text-white rounded-3xl p-8 md:p-12">
         <div className="relative z-10 max-w-2xl">
@@ -56,6 +89,26 @@ export default function Dashboard() {
           </svg>
         </div>
       </section>
+
+      {/* Beta Program CTA */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-orange-50 border border-orange-100 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
+            <Users className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="font-bold text-orange-900">Join our Exclusive Beta Program</h3>
+            <p className="text-sm text-orange-700">We're looking for our first 1,000 beta users. Get lifetime discounts and early access to premium features.</p>
+          </div>
+        </div>
+        <button className="bg-orange-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-orange-700 transition-all active:scale-95 whitespace-nowrap">
+          Join Beta Now
+        </button>
+      </motion.div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

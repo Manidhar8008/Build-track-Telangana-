@@ -1,13 +1,16 @@
 import React from 'react';
-import { Map, LayoutDashboard, Briefcase, BarChart3, Menu, X, ShieldCheck } from 'lucide-react';
+import { Map, LayoutDashboard, Briefcase, BarChart3, Menu, X, ShieldCheck, HelpCircle, LogIn, LogOut, User as UserIcon } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { User } from 'firebase/auth';
+import { signInWithGoogle, logout } from '../firebase';
 
 interface NavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  user: User | null;
 }
 
-export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
+export default function Navbar({ activeTab, setActiveTab, user }: NavbarProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const navItems = [
@@ -16,6 +19,7 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
     { id: 'services', label: 'Marketplace', icon: Briefcase },
     { id: 'analytics', label: 'Analytics', icon: BarChart3 },
     { id: 'pricing', label: 'Pricing', icon: ShieldCheck },
+    { id: 'help', label: 'Help', icon: HelpCircle },
   ];
 
   return (
@@ -48,8 +52,34 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             </div>
           </div>
           <div className="hidden md:flex items-center gap-4">
-            <button className="btn-secondary text-sm">Login</button>
-            <button className="btn-primary text-sm">Register Project</button>
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
+                  {user.photoURL ? (
+                    <img src={user.photoURL} alt={user.displayName || ''} className="w-6 h-6 rounded-full" referrerPolicy="no-referrer" />
+                  ) : (
+                    <UserIcon className="w-4 h-4 text-gray-400" />
+                  )}
+                  <span className="text-xs font-medium text-gray-700">{user.displayName?.split(' ')[0]}</span>
+                </div>
+                <button 
+                  onClick={() => logout()}
+                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button 
+                onClick={() => signInWithGoogle()}
+                className="btn-primary text-sm flex items-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                Login with Google
+              </button>
+            )}
+            <button className="btn-secondary text-sm">Register Project</button>
           </div>
           <div className="flex items-center md:hidden">
             <button
@@ -84,8 +114,30 @@ export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
             </button>
           ))}
           <div className="pt-4 flex flex-col gap-2 px-3">
-            <button className="btn-secondary w-full">Login</button>
-            <button className="btn-primary w-full">Register Project</button>
+            {user ? (
+              <button 
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="btn-secondary w-full flex items-center justify-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout ({user.displayName?.split(' ')[0]})
+              </button>
+            ) : (
+              <button 
+                onClick={() => {
+                  signInWithGoogle();
+                  setIsOpen(false);
+                }}
+                className="btn-primary w-full flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                Login with Google
+              </button>
+            )}
+            <button className="btn-secondary w-full">Register Project</button>
           </div>
         </div>
       )}
